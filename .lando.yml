@@ -1,0 +1,5 @@
+name: apn
+recipe: drupal7
+config:
+  php: '5.6'
+  webroot: public_html

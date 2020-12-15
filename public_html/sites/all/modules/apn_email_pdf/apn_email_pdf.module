@@ -1,0 +1,45 @@
+<?php
+
+
+/**
+ * Implements hook_webform_submission_presave().
+ */
+function apn_email_pdf_webform_submission_presave($node, &$submission) {
+  // set webform files to equal attachment select list
+
+  if ($node->title == 'Email PDF') {
+
+    // check if content id is set
+    if($submission->data[8][0]) {
+
+      // set webform files to equal attachment select list
+      $submission->data[7] = $submission->data[6];
+      $submission->file_usage['added_fids'] = $submission->data[6];
+
+    }
+  }
+}
+
+
+/**
+ * Implements hook_mail_alter().
+ */
+function apn_email_pdf_mail_alter(&$message) {
+  // add pdf of content to the attachments
+
+  if ($message['id'] == 'webform_submission' && $message['params']['node']->title == 'Email PDF') {
+    $nid = $message['params']['submission']->data[8][0];
+    if($nid){
+      module_load_include('inc', 'print_pdf', 'print_pdf.pages');
+      $message['params']['attachments'][] = array(
+        'filecontent' => print_pdf_generate_path($nid),
+        'filemime' => 'application/pdf',
+        'filename' => 'info.pdf',
+        );
+    }
+  }
+}
+
+
+
+
