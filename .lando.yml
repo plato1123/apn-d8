@@ -1,0 +1,4 @@
+name: apn
+recipe: drupal7
+config:
+  webroot: public_html

@@ -1,0 +1,6 @@
+name = APN Email PDF
+description = Add PDF of content to database, Attach node files to a webform submission
+dependencies[] = webform
+core = 7.x
+
+
